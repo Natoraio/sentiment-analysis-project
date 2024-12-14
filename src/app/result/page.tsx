@@ -3,7 +3,7 @@
 import { WordCloudChart } from "@/components/wordCloudChart";
 import Image from "next/image";
 import { useSearchParams, redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 interface IResult {
   sentiment: "negative" | "neutral" | "positive";
@@ -88,4 +88,10 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+const SuspenseResultPage = () => (
+  <Suspense>
+    <ResultPage />
+  </Suspense>
+);
+
+export default SuspenseResultPage;

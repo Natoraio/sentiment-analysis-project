@@ -24,9 +24,8 @@ export function WordCloudChart(props: IWordCloudChartProps) {
     setData(props.data);
   }, [props.data]);
 
-  // @ts-ignore
+  // @ts-expect-error idk
   const fontSize = (word) => (100 * word.value) / max;
-  // @ts-ignore
   const rotate = () => 0; // word.value % 90;
 
   if (data === undefined) {
