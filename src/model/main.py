@@ -12,7 +12,7 @@ class Model:
     "LABEL_2": "positive",
   }
  
-  root_path = os.getcwd() + "/src/models/distilbert"
+  root_path = os.getcwd() + "/src/model/distilbert"
  
   def __init__(self):
     self.tokenizer = AutoTokenizer.from_pretrained(self.root_path)
@@ -56,6 +56,6 @@ if __name__ == "__main__":
     "score": score,
     "attentions": list(map(lambda x: { "word": x[0], "score": x[1] }, attentions))
   }
- 
+
   print(json.dumps(result))
  

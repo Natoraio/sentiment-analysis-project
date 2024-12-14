@@ -6,12 +6,12 @@ export const POST = async (req: NextRequest) => {
   const { text } = await req.json();
 
   const { spawn } = require("child_process");
-  const python = spawn("python3", ["src/model/main.py"]);
+  const python = spawn("python3", ["src/model/main.py", text]);
 
   let res = "";
   for await (const output of python.stdout) {
     res += output.toString();
   }
 
-  return NextResponse.json({ message: "Hello" });
+  return NextResponse.json(JSON.parse(res));
 };
