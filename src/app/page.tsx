@@ -54,7 +54,10 @@ export default function Home() {
             <TextField state={inputValue} setState={handleInputChange} />
           </div>
           <Button displayText="Analyze" onClickHandler={handleAnalyze} />
-          <SubButton displayText="Upload file" onFileUpload={handleFileUpload} />
+          <SubButton
+            displayText="Upload file"
+            onFileUpload={handleFileUpload}
+          />
         </footer>
       </div>
     </div>
