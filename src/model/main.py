@@ -54,7 +54,7 @@ if __name__ == "__main__":
   result = {
     "sentiment": sentiment,
     "score": score,
-    "attentions": map(lambda x: { "word": x[0], "score": x[1] }, attentions)
+    "attentions": list(map(lambda x: { "word": x[0], "score": x[1] }, attentions))
   }
  
   print(json.dumps(result))
