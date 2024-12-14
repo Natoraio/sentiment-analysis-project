@@ -59,7 +59,7 @@ const ResultPage = () => {
     <div>
       <header className="bg-[#5E62CC] text-white p-5 text-center w-full flex justify-between items-center">
         <button
-          className=" text-white px-4 py-1 rounded hover:{bg-white}"
+          className=" text-white px-4 py-1 rounded hover:bg-white hover:text-black transition-all"
           onClick={() => redirect("/")}
         >
           Back to Home
