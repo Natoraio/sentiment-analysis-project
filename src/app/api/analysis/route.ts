@@ -13,5 +13,5 @@ export const POST = async (req: NextRequest) => {
     res += output.toString();
   }
 
-  return NextResponse.json(JSON.parse(res));
+  return NextResponse.json({ result: JSON.parse(res) });
 };
