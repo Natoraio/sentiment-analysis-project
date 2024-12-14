@@ -12,7 +12,7 @@ class Model:
     "LABEL_2": "positive",
   }
  
-  root_path = os.getcwd() + "/src/models/finetuning-distilbert-sentiment-model"
+  root_path = os.getcwd() + "/src/models/distilbert"
  
   def __init__(self):
     self.tokenizer = AutoTokenizer.from_pretrained(self.root_path)
