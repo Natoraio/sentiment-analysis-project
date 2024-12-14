@@ -1,9 +1,13 @@
 "use client";
 
+import Button from "@/components/button";
 import { WordCloudChart } from "@/components/wordCloudChart";
+import { analyse } from "@/lib/sentiment.api";
+import { createFeedback, Sentiment } from "@/lib/supabase.api";
 import Image from "next/image";
 import { useSearchParams, redirect } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 interface IResult {
   sentiment: "negative" | "neutral" | "positive";
@@ -13,6 +17,8 @@ interface IResult {
 
 const ResultPage = () => {
   const [result, setResult] = useState<IResult>();
+  const [isVote, setIsVote] = useState<boolean>(false);
+
   const searchParams = useSearchParams();
   const text = searchParams.get("text");
 
@@ -27,22 +33,26 @@ const ResultPage = () => {
     }
   };
 
+  const voteButtons = [
+    { label: "negative", styles: "bg-[#CB3333] hover:bg-[#ED5555]" },
+    { label: "neutral", styles: "bg-black hover:bg-[#444444]" },
+    { label: "positive", styles: "bg-[#38A617] hover:bg-[#5AC839]" },
+  ];
+
+  const voteHandler = (vote: Sentiment) => {
+    setIsVote(true);
+
+    Swal.fire({
+      title: "Success",
+      text: "your vote has been submitted",
+      icon: "success",
+    });
+
+    createFeedback(text!, result!.sentiment as Sentiment, vote);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(
-        "https://t0peerakarn-sentiment-api.hf.space/analyse",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text }),
-        }
-      );
-      const result = await res.json();
-
-      setResult(result);
-    };
-
-    fetchData();
+    analyse(text!).then((result) => setResult(result));
   }, [text]);
 
   return result ? (
@@ -79,6 +89,24 @@ const ResultPage = () => {
             value: Math.round(a.score * 100),
           }))}
         />
+
+        <div>
+          <h2 className="mb-5">What do you think?</h2>
+          <div className="border rounded-lg p-4 flex flex-row justify-evenly">
+            {isVote ? (
+              <p>Thank you for your feedback :D</p>
+            ) : (
+              voteButtons.map((item) => (
+                <Button
+                  key={item.label}
+                  displayText={item.label}
+                  onClickHandler={() => voteHandler(item.label as Sentiment)}
+                  styles={item.styles}
+                />
+              ))
+            )}
+          </div>
+        </div>
       </main>
     </div>
   ) : (

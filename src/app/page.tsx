@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/button";
-import SubButton from "@/components/subButton";
 import TextField from "@/components/textField";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
@@ -27,9 +26,6 @@ export default function Home() {
     }
 
     redirect(`/result?text=${inputValue}`);
-  };
-  const handleFileUpload = (file: File) => {
-    console.log("File uploaded:", file);
   };
 
   return (
@@ -60,10 +56,6 @@ export default function Home() {
             <TextField state={inputValue} setState={handleInputChange} />
           </div>
           <Button displayText="Analyze" onClickHandler={handleAnalyze} />
-          <SubButton
-            displayText="Upload file"
-            onFileUpload={handleFileUpload}
-          />
         </footer>
       </div>
     </div>
