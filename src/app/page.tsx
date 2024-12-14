@@ -5,6 +5,8 @@ import Image from "next/image";
 import Button from "@/components/button";
 import SubButton from "@/components/subButton";
 import TextField from "@/components/textField";
+import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -14,13 +16,17 @@ export default function Home() {
   };
 
   const handleAnalyze = async () => {
-    const res = await fetch("/api/analysis", {
-      method: "POST",
-      body: JSON.stringify({ text: inputValue }),
-    });
-    const { result } = await res.json();
+    if (inputValue === "") {
+      Swal.fire({
+        title: "Error",
+        text: "text can't be empty",
+        icon: "error",
+      });
 
-    console.log(result);
+      return;
+    }
+
+    redirect(`/result?text=${inputValue}`);
   };
   const handleFileUpload = (file: File) => {
     console.log("File uploaded:", file);
